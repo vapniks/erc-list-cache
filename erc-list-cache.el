@@ -6,10 +6,10 @@
 ;; Maintainer: Joe Bloggs <vapniks@yahoo.com>
 ;; Copyleft (Ↄ) 2019, Joe Bloggs, all rites reversed.
 ;; Created: 2019-01-14 02:29:19
-;; Version: 0.1
-;; Last-Updated: 2019-01-14 02:29:19
+;; Version: 20190114.1027
+;; Last-Updated: Tue Jan 15 22:38:00 2019
 ;;           By: Joe Bloggs
-;;     Update #: 1
+;;     Update #: 11
 ;; URL: https://github.com/vapniks/erc-list-cache
 ;; Keywords: comm
 ;; Compatibility: GNU Emacs 25.2.2
@@ -41,20 +41,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Commentary: 
-;;
-;; Bitcoin donations gratefully accepted: 1ArFina3Mi8UDghjarGqATeBgXRDWrsmzo
-;;
-;; Cache IRC server channel lists
 ;; 
-;;;;;;;;
+;; Bitcoin donations gratefully accepted: 1ArFina3Mi8UDghjarGqATeBgXRDWrsmzo
+;;;;;;;;;;;
 
 ;;; Commands:
 ;;
-
+;; Below is a complete list of commands:
 ;;
-;; All of the above can be customized by:
-;;      M-x customize-group RET erc-list-cache RET
+;;  `erc-switch-to-channels-list'
+;;    Switch to the channels list buffer for the current IRC server.
+;;    Keybinding: M-x erc-switch-to-channels-list
 ;;
+;;; Customizable Options:
+;;
+;; Below is a list of customizable options:
+;;
+;;  `erc-list-cache-dir'
+;;    Directory containing cached channel lists.
+;;    default = (concat erc-user-emacs-directory "erc_channel_lists")
+;;  `erc-list-cache-max-age'
+;;    Maximum number of days before prompting for update of cached channel list.
+;;    default = 30
 
 ;;; Installation:
 ;;
@@ -80,7 +88,7 @@
   :group 'erc-list
   :type 'directory)
 
-(defcustom erc-list-max-cache-age 30
+(defcustom erc-list-cache-max-age 30
   "Maximum number of days before prompting for update of cached channel list."
   :group 'erc-list
   :type 'integer)
@@ -90,7 +98,7 @@
   "Switch to the channels list buffer for the current IRC server.
 If the channels list buffer doesn't currently exist create one from either cached information
 or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
-  (interactive "P")
+  (interactive "p")
   (if (eq major-mode 'erc-mode)
       (let* ((network (symbol-name (erc-network)))
 	     (serverbuf (process-buffer erc-server-process))
@@ -101,9 +109,9 @@ or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
 	    (switch-to-buffer erc-list-buffer)
 	  (if (or arg
 		  (not (file-readable-p cachefilename))
-		  (and (> cachefileage erc-list-max-cache-age)
+		  (and (> cachefileage erc-list-cache-max-age)
 		       (y-or-n-p (format "Cache file is more than %s days old, reload from server? "
-					 erc-list-max-cache-age))))
+					 erc-list-cache-max-age))))
 	      (progn (erc-cmd-LIST)
 		     (sit-for 1 t) ;need to wait for `erc-list-buffer' to be defined
 		     (with-current-buffer erc-list-buffer
