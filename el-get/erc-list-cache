@@ -1,0 +1,5 @@
+(:name erc-list-cache
+ :description "erc-list-cache"
+ :website "https://github.com/vapniks/erc-list-cache"
+ :type git
+ :url "https://github.com/vapniks/erc-list-cache.git")

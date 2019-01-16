@@ -6,10 +6,10 @@
 ;; Maintainer: Joe Bloggs <vapniks@yahoo.com>
 ;; Copyleft (Ↄ) 2019, Joe Bloggs, all rites reversed.
 ;; Created: 2019-01-14 02:29:19
-;; Version: 20190114.1027
-;; Last-Updated: Tue Jan 15 22:38:00 2019
+;; Version: 20190116.1719
+;; Last-Updated: Wed Jan 16 17:19:00 2019
 ;;           By: Joe Bloggs
-;;     Update #: 11
+;;     Update #: 12
 ;; URL: https://github.com/vapniks/erc-list-cache
 ;; Keywords: comm
 ;; Compatibility: GNU Emacs 25.2.2
@@ -43,6 +43,16 @@
 ;;; Commentary: 
 ;; 
 ;; Bitcoin donations gratefully accepted: 1ArFina3Mi8UDghjarGqATeBgXRDWrsmzo
+;; 
+;;; Installation
+;; 
+;; To make sure you have the most up-to-date version of this library it is best to install 
+;; using the emacs package system, with the appropriate repository added (e.g https://melpa.org/)
+;; 
+;; To install without using a package manager:
+;; 
+;;  - Put the library in a directory in the emacs load path, like ~/.emacs.d/
+;;  - Add (require 'erc-list-cache) in your ~/.emacs file
 ;;;;;;;;;;;
 
 ;;; Commands:
@@ -98,7 +108,7 @@
   "Switch to the channels list buffer for the current IRC server.
 If the channels list buffer doesn't currently exist create one from either cached information
 or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
-  (interactive "p")
+  (interactive "P")
   (if (eq major-mode 'erc-mode)
       (let* ((network (symbol-name (erc-network)))
 	     (serverbuf (process-buffer erc-server-process))
@@ -142,7 +152,8 @@ or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
 	       (with-current-buffer serverbuf
 		 (setq erc-list-buffer buf)
 		 (concat "*Channels of " erc-server-announced-name " (cached)*"))))
-	    (set-buffer-modified-p nil))))
+	    (set-buffer-modified-p nil)
+	    (goto-char (point-min)))))
     (error "This is not an ERC buffer")))
 
 

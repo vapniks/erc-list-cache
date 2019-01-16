@@ -1,0 +1,33 @@
+
+* Commentary
+Cache IRC server channel lists for faster loading.
+
+Bitcoin donations gratefully accepted: 1ArFina3Mi8UDghjarGqATeBgXRDWrsmzo
+
+* Installation
+
+To make sure you have the most up-to-date version of this library it is best to install 
+using the emacs package system, with the appropriate repository added (e.g https://melpa.org/)
+
+To install without using a package manager:
+
+ - Put the library in a directory in the emacs load path, like ~/.emacs.d/
+ - Add (require 'erc-list-cache) in your ~/.emacs file
+* Commands & keybindings
+
+ Below is a complete list of commands:
+
+   - *erc-switch-to-channels-list* :
+    Switch to the channels list buffer for the current IRC server.\\
+    Keybinding: =M-x erc-switch-to-channels-list=
+
+* Customizable Options
+
+ Below is a list of customizable options:
+
+   - *erc-list-cache-dir* :
+    Directory containing cached channel lists.\\
+    default value: =(concat erc-user-emacs-directory "erc_channel_lists")=
+   - *erc-list-cache-max-age* :
+    Maximum number of days before prompting for update of cached channel list.\\
+    default value: =30=

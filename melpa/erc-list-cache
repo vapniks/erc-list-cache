@@ -1,0 +1,4 @@
+(erc-list-cache
+ :repo "vapniks/erc-list-cache"
+ :fetcher github
+)
