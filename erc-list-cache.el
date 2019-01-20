@@ -135,6 +135,7 @@ or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
 				 nil t)))
 	    (find-file cachefilename)
 	    (goto-char (point-min))
+	    (setq-local erc-list-server-buffer serverbuf)
 	    ;; Align columns
 	    (while (re-search-forward "^#+[^ ]+" nil t)
 	      (put-text-property
