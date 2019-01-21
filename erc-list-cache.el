@@ -116,7 +116,8 @@ or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
 	     (cachefileage (- (time-to-days (current-time))
 			      (time-to-days (nth 5 (file-attributes cachefilename))))))
 	(if (buffer-live-p erc-list-buffer)
-	    (switch-to-buffer erc-list-buffer)
+	    (progn (switch-to-buffer erc-list-buffer)
+		   (setq-local erc-list-server-buffer serverbuf))
 	  (if (or arg
 		  (not (file-readable-p cachefilename))
 		  (and (> cachefileage erc-list-cache-max-age)
@@ -151,7 +152,7 @@ or a call `erc-cmd-LIST' (if cache doesn't exist or prefix ARG is used)."
 	    (let ((buf (current-buffer)))
 	      (rename-buffer
 	       (with-current-buffer serverbuf
-		 (setq erc-list-buffer buf)
+		 (setq-local erc-list-buffer buf)
 		 (concat "*Channels of " erc-server-announced-name " (cached)*"))))
 	    (set-buffer-modified-p nil)
 	    (goto-char (point-min)))))
